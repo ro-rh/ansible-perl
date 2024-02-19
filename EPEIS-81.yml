@@ -1,0 +1,24 @@
+- name: EPEIS-81
+  hosts: target-host
+  gather_facts: no
+  tasks:
+    - name: Clone Git Repo
+      git:
+        repo: https://github.com/ro-rh/ansible-perl.git
+        dest: /scripts/perl-for-ansible.pl
+        version: main
+        # Change Branch if needed
+        force: yes
+        # Yes?
+
+    - name: Execute Perl script
+      command: /tmp/repository/perl-for-ansible.pl
+      register: script_output
+      args:
+        chdir: /tmp/repository
+        # Probs change this
+
+    - name: Display script output
+      debug:
+        msg: "{{ script_output.stdout }}"
+      #  Maybe log somehwere else
